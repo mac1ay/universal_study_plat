@@ -84,13 +84,25 @@ const homeworkWizard = new Scenes.WizardScene(
                     const columnF = row.getCell(6).value; 
                     const columnJ = row.getCell(10).value; 
                     const columnK = row.getCell(11).value; 
+                    const columnO = row.getCell(15).value;
+                    const columnP = row.getCell(16).value;
 
                     const weekpercent = Math.trunc((columnF - columnE) / ((columnF + columnE) / 2) * 100)+100;
                     const monthpercent = Math.trunc((columnK - columnJ) / ((columnK + columnJ) / 2) * 100)+100;
+                    const daypercent = Math.trunc((columnP - columnO) / ((columnP + columnO) / 2) * 100)+100;
 
                     const responseMessage = `Найдены данные для ${ctx.scene.state.userName}:\n` +
                         `Процент проверенного дз за неделю: ${weekpercent}%\n` +
-                        `Процент проверенного дз за месяц: ${monthpercent}%`;
+                        `Процент проверенного дз за месяц: ${monthpercent}%\n` +
+                        `Процент проверенного дз за день: ${daypercent}%`;
+
+                    if (weekpercent < 75) {
+                        ctx.reply('Процент проверенного дз за неделю ниже 75%!');
+                    } else if (monthpercent < 75) {
+                        ctx.reply('Процент проверенного дз за месяц ниже 75%!');
+                    } else if(daypercent < 75) {
+                        ctx.reply('Процент проверенного дз за день ниже 75%!');
+                    };
         
                     console.log('Found data:', responseMessage);
                     ctx.reply(responseMessage);
