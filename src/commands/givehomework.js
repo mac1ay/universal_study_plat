@@ -3,11 +3,11 @@ import https from 'https';
 import ExcelJs from 'exceljs';
 import { Scenes } from 'telegraf';
 
-const homeworkWizard = new Scenes.WizardScene(
-    'HOMEWORK_WIZARD',
+const givehomeworkWizard = new Scenes.WizardScene(
+    'GIVEHOMEWORK_WIZARD',
 
     (ctx) => {
-        console.log('Started homework wizard: Requesting name');
+        console.log('Started givehomework wizard: Requesting name');
         ctx.reply('Введите имя фамилию в формате Иванов Иван');
         return ctx.wizard.next();
     },
@@ -80,28 +80,27 @@ const homeworkWizard = new Scenes.WizardScene(
                 
                 if (rowValue.toLowerCase() === ctx.scene.state.userName.toLowerCase()) {
                     found = true;
-                    const columnE = row.getCell(5).value; 
-                    const columnF = row.getCell(6).value; 
-                    const columnJ = row.getCell(10).value; 
-                    const columnK = row.getCell(11).value; 
-                    const columnO = row.getCell(15).value;
-                    const columnP = row.getCell(16).value;
+                    const columnD = row.getCell(4).value; 
+                    const columnG = row.getCell(7).value; 
+                    const columnI = row.getCell(9).value; 
+                    const columnL = row.getCell(12).value;
+                    const columnN = row.getCell(14).value;
+                    const columnQ = row.getCell(17).value; 
 
-                    const monthpercent = Math.trunc((columnF / columnE)*100);
-                    const weekpercent = Math.trunc((columnK / columnJ)*100);
-                    const daypercent = Math.trunc((columnP / columnO)*100);
-
+                    const monthpercent = Math.trunc((columnD / columnG)*100);
+                    const weekpercent = Math.trunc((columnI / columnL)*100);
+                    const daypercent = Math.trunc((columnN / columnQ)*100);
                     const responseMessage = `Найдены данные для ${ctx.scene.state.userName}:\n` +
-                        `Процент проверенного дз за месяц: ${monthpercent}%\n` +
-                        `Процент проверенного дз за неделю: ${weekpercent}%\n` +
-                        `Процент проверенного дз за день: ${daypercent}%`;
+                        `Процент выданного дз за месяц: ${monthpercent}%\n` +
+                        `Процент выданного дз за неделю: ${weekpercent}%\n` +
+                        `Процент выданного дз за день: ${daypercent}%`;
 
-                      if (weekpercent < 75) {
-                        ctx.reply('Процент проверенного дз за неделю ниже 75%!');
-                    } if (monthpercent < 75) {
-                        ctx.reply('Процент проверенного дз за месяц ниже 75%!');
-                    } if(daypercent < 75) {
-                        ctx.reply('Процент проверенного дз за день ниже 75%!');
+                      if   (weekpercent < 70) {
+                        ctx.reply('Процент выданного дз за неделю ниже 70%!');
+                    } if (monthpercent < 70) {
+                        ctx.reply('Процент выданного дз за месяц ниже 70%!');
+                    } if (daypercent < 70) {
+                        ctx.reply('Процент выданного дз за день ниже 70%!');
                     };
         
                     console.log('Found data:', responseMessage);
@@ -127,11 +126,11 @@ const homeworkWizard = new Scenes.WizardScene(
 );
 
 const command = {
-    name: 'homework',
-    scene: homeworkWizard,
+    name: 'givehomework',
+    scene: givehomeworkWizard,
     execute: async (ctx) => {
         try {
-            return ctx.scene.enter('HOMEWORK_WIZARD');
+            return ctx.scene.enter('GIVEHOMEWORK_WIZARD');
         } catch (error) {
             console.error('Error entering scene:', error);
             ctx.reply('Произошла ошибка при запуске команды.');

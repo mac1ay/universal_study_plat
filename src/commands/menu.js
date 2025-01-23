@@ -4,7 +4,7 @@ export default {
         await ctx.reply("Выбирете действие", {
             reply_markup: {
                 keyboard: [
-                    ["/closemenu", "/homework"]
+                    ["/closemenu", "/homework", "/givehomework"]
                 ]
             }
         })
